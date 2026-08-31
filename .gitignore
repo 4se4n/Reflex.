@@ -1,0 +1,6 @@
+node_modules/
+reflex-backend/node_modules/
+reflex-backend/prisma/dev.db
+reflex-backend/prisma/dev.db-journal
+reflex-backend/.env
+.DS_Store

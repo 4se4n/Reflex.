@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflex Logistics</title>
+    <!-- Google Fonts: Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        reflex: {
+                            red: '#EB1515',
+                            white: '#FFFFFF',
+                            black: '#020202',
+                            bg: '#F8F9FA',
+                            gray: '#F4F4F4'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+</head>
+<body class="bg-reflex-bg text-reflex-black font-sans antialiased min-h-screen flex flex-col">
+    
+    <!-- Navigation Bar -->
+    <nav class="bg-reflex-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row justify-between items-center h-auto sm:h-16 py-3 sm:py-0 gap-3">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold tracking-tight text-reflex-black">Reflex<span class="text-reflex-red">.</span></span>
+                </div>
+                <div class="flex space-x-1 sm:space-x-2 overflow-x-auto no-scrollbar w-full sm:w-auto" id="role-tabs">
+                    <button data-view="retailer" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-reflex-black hover:bg-reflex-gray transition-all whitespace-nowrap active-tab">Retailer Portal</button>
+                    <button data-view="dispatcher" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-reflex-black hover:bg-reflex-gray transition-all whitespace-nowrap">Dispatcher Hub</button>
+                    <button data-view="rider" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-reflex-black hover:bg-reflex-gray transition-all whitespace-nowrap">Rider View</button>
+                    <button data-view="public" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-reflex-black hover:bg-reflex-gray transition-all whitespace-nowrap">Public Tracking</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        
+        <!-- VIEW 1: RETAILER PORTAL -->
+        <section id="retailer-view" class="view-section max-w-2xl mx-auto">
+            <div class="bg-reflex-white rounded-xl shadow-md p-6 sm:p-8 border border-gray-100">
+                <h2 class="text-2xl font-bold text-reflex-black mb-6">Log New Delivery Request</h2>
+                <form id="retailer-form" class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Customer Name</label>
+                        <input type="text" name="customerName" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-reflex-red focus:border-reflex-red outline-none transition-all" placeholder="John Doe">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Customer Phone</label>
+                        <input type="tel" name="customerPhone" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-reflex-red focus:border-reflex-red outline-none transition-all" placeholder="+254712345678">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Delivery Address</label>
+                        <textarea name="deliveryAddress" required rows="3" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-reflex-red focus:border-reflex-red outline-none transition-all" placeholder="123 Logistics Way, Nairobi"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Item Description</label>
+                        <input type="text" name="itemDescription" required class="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-reflex-red focus:border-reflex-red outline-none transition-all" placeholder="Fragile electronics box">
+                    </div>
+                    <div id="retailer-feedback" class="hidden rounded-lg p-4 text-sm font-medium"></div>
+                    <button type="submit" class="w-full bg-reflex-red text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 transition-colors shadow-sm flex justify-center items-center gap-2">
+                        <span>Submit Request</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- VIEW 2: DISPATCHER HUB -->
+        <section id="dispatcher-view" class="view-section hidden">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
+                <h2 class="text-2xl font-bold text-reflex-black">Active Logistics Queue</h2>
+                <span class="text-xs text-gray-500 flex items-center gap-2 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">
+                    <span class="w-2 h-2 bg-reflex-red rounded-full animate-pulse"></span>
+                    Auto-syncing every 10s
+                </span>
+            </div>
+            <div class="bg-reflex-white rounded-xl shadow-md border border-gray-100 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-gray-50 border-b border-gray-200">
+                            <tr>
+                                <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Tracking Code</th>
+                                <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Customer</th>
+                                <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Address</th>
+                                <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Assigned Rider</th>
+                                <th class="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dispatcher-table-body" class="divide-y divide-gray-100">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="dispatcher-empty" class="hidden p-8 text-center text-gray-500">No active deliveries found.</div>
+            </div>
+        </section>
+
+        <!-- VIEW 3: RIDER MOBILE VIEW -->
+        <section id="rider-view" class="view-section hidden max-w-md mx-auto">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-reflex-black mb-2">My Deliveries</h2>
+                <select id="rider-context-select" class="w-full px-4 py-2.5 rounded-lg border border-gray-300 bg-white text-sm focus:ring-2 focus:ring-reflex-red outline-none shadow-sm">
+                    <option value="Rider-001">Simulate as: Rider-001</option>
+                    <option value="Rider-002">Simulate as: Rider-002</option>
+                    <option value="Rider-003">Simulate as: Rider-003</option>
+                </select>
+            </div>
+            <div id="rider-cards-container" class="space-y-4">
+                <!-- Populated by JS -->
+            </div>
+            <div id="rider-empty" class="hidden p-8 text-center text-gray-500 bg-white rounded-xl border border-gray-100 shadow-sm">No deliveries currently assigned to you.</div>
+        </section>
+
+        <!-- VIEW 4: PUBLIC TRACKING -->
+        <section id="public-view" class="view-section hidden max-w-3xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-reflex-black mb-3">Track Your Delivery</h2>
+                <p class="text-gray-500 mb-6">Enter your tracking ID to see real-time status updates.</p>
+                <form id="tracking-form" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                    <input type="text" id="tracking-input" required class="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-reflex-red focus:border-reflex-red outline-none text-lg shadow-sm" placeholder="e.g., REF-1049">
+                    <button type="submit" class="bg-reflex-black text-white font-bold py-3 px-8 rounded-lg hover:bg-gray-800 transition-colors shadow-md">
+                        Track
+                    </button>
+                </form>
+            </div>
+
+            <div id="tracking-result" class="hidden bg-reflex-white rounded-xl shadow-md p-6 sm:p-8 border border-gray-100">
+                <div class="flex flex-col sm:flex-row justify-between items-start mb-8 gap-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-reflex-black" id="result-tracking-code">REF-XXXX</h3>
+                        <p class="text-sm text-gray-500 mt-1" id="result-customer">Customer Name</p>
+                    </div>
+                    <span id="result-status-badge" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide"></span>
+                </div>
+                
+                <!-- Vertical Timeline UI -->
+                <div class="relative pl-2">
+                    <div class="absolute left-[19px] top-2 bottom-2 w-0.5 bg-gray-200"></div>
+                    <div class="space-y-8 relative">
+                        <!-- Step 1 -->
+                        <div class="timeline-step flex items-start" data-step="ASSIGNED">
+                            <div class="step-indicator w-10 h-10 rounded-full bg-gray-200 border-4 border-white flex items-center justify-center z-10 shrink-0 shadow-sm transition-all duration-300">
+                                <svg class="w-5 h-5 text-white hidden step-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <div class="ml-5 pt-1">
+                                <h4 class="text-sm font-bold text-gray-900">Order Assigned</h4>
+                                <p class="text-xs text-gray-500 mt-1">Your delivery request has been received and assigned to a rider.</p>
+                            </div>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="timeline-step flex items-start" data-step="PICKED_UP">
+                            <div class="step-indicator w-10 h-10 rounded-full bg-gray-200 border-4 border-white flex items-center justify-center z-10 shrink-0 shadow-sm transition-all duration-300">
+                                <svg class="w-5 h-5 text-white hidden step-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <div class="ml-5 pt-1">
+                                <h4 class="text-sm font-bold text-gray-900">Picked Up</h4>
+                                <p class="text-xs text-gray-500 mt-1">The rider has picked up your item and is on the way.</p>
+                            </div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="timeline-step flex items-start" data-step="DELIVERED">
+                            <div class="step-indicator w-10 h-10 rounded-full bg-gray-200 border-4 border-white flex items-center justify-center z-10 shrink-0 shadow-sm transition-all duration-300">
+                                <svg class="w-5 h-5 text-white hidden step-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <div class="ml-5 pt-1">
+                                <h4 class="text-sm font-bold text-gray-900">Delivered</h4>
+                                <p class="text-xs text-gray-500 mt-1">Your item has been successfully delivered.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tracking-error" class="hidden mt-6 p-4 bg-red-50 text-reflex-red rounded-lg text-center text-sm font-medium border border-red-100"></div>
+        </section>
+    </main>
+
+    <!-- Rider Confirmation Modal -->
+    <div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-200">
+        <div class="bg-white rounded-xl shadow-2xl max-w-sm w-full p-6 transform transition-all duration-200 scale-95 opacity-0 modal-content">
+            <h3 class="text-lg font-bold text-reflex-black mb-2">Confirm Delivery</h3>
+            <p class="text-sm text-gray-500 mb-4">Enter the confirmation code provided by the customer to mark this delivery as complete.</p>
+            <input type="text" id="confirmation-code-input" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-reflex-red focus:border-reflex-red outline-none mb-4 text-center text-2xl tracking-widest font-bold uppercase" placeholder="XXXX" maxlength="6">
+            <div class="flex gap-3">
+                <button id="modal-cancel" class="flex-1 px-4 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors">Cancel</button>
+                <button id="modal-confirm" class="flex-1 px-4 py-2.5 rounded-lg bg-reflex-red text-white font-bold hover:bg-red-700 transition-colors shadow-sm">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

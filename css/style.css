@@ -1,0 +1,60 @@
+/* styles.css */
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Active Tab Styling */
+.active-tab {
+    background-color: #F4F4F4;
+    color: #020202;
+    font-weight: 600;
+}
+
+/* Timeline Animations */
+.timeline-step .step-indicator {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-step.completed .step-indicator {
+    background-color: #10B981; /* Emerald Green for completed */
+    border-color: #FFFFFF;
+}
+
+.timeline-step.active .step-indicator {
+    background-color: #EB1515; /* Reflex Red for active */
+    box-shadow: 0 0 0 4px rgba(235, 21, 21, 0.15);
+    border-color: #FFFFFF;
+}
+
+.timeline-step.completed .step-icon,
+.timeline-step.active .step-icon {
+    display: block !important;
+    animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); }
+    80% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Modal Animation States */
+#confirmation-modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+#confirmation-modal:not(.hidden) {
+    opacity: 1;
+    pointer-events: auto;
+}
+#confirmation-modal:not(.hidden) .modal-content {
+    transform: scale(1);
+    opacity: 1;
+}

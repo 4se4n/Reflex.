@@ -1,0 +1,28 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum DeliveryStatus {
+  ASSIGNED
+  PICKED_UP
+  DELIVERED
+}
+
+model DeliveryRequest {
+  id               String         @id @default(uuid())
+  trackingCode     String         @unique
+  customerName     String
+  customerPhone    String
+  deliveryAddress  String
+  itemDescription  String
+  status           DeliveryStatus @default(ASSIGNED)
+  assignedRider    String?
+  confirmationCode String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+}
