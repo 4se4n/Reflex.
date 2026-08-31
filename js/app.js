@@ -1,5 +1,5 @@
 // app.js
-const API_BASE = 'https://reflex-backend-90x9.onrender.com';
+const API_BASE = 'https://reflex-backend-90x9.onrender.com/api';
 
 // State
 let currentView = 'retailer';
